@@ -1,0 +1,15 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      JWT_SECRET: ${JWT_SECRET:?Définissez JWT_SECRET dans le fichier .env}
+      ALLOW_REGISTRATION: ${ALLOW_REGISTRATION:-true}
+      # Mettre COOKIE_SECURE=true une fois le site servi en HTTPS (recommandé)
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+    volumes:
+      - quantum-data:/app/data
+    restart: unless-stopped
+volumes:
+  quantum-data:

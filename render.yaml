@@ -1,0 +1,22 @@
+# Déploiement Render (Blueprint). Le disque persistant requiert une offre payante.
+services:
+  - type: web
+    name: quantum-horaire
+    runtime: node
+    plan: starter
+    buildCommand: npm ci --omit=dev
+    startCommand: node src/server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /var/data/quantum.db
+      - key: ALLOW_REGISTRATION
+        value: "true"
+    disk:
+      name: quantum-data
+      mountPath: /var/data
+      sizeGB: 1
