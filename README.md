@@ -21,11 +21,11 @@ et génère le PDF ou l'impression officielle (drapeau, signature et date automa
 
 | Couche | Technologie |
 |---|---|
-| Serveur / API | Node.js 18+, Express 4 |
+| Serveur / API | Node.js 22, Express 4 |
 | Base de données | SQLite (better-sqlite3, mode WAL) — un seul fichier |
 | Front | HTML/CSS/JS natif (aucun build), html2canvas + jsPDF |
 | Tests | `node:test` (6 scénarios API) |
-| Déploiement | Docker, Render ou VPS |
+| Déploiement | Render, Docker ou VPS |
 
 ```
 src/            serveur (app, config, db, auth, routes/)
@@ -76,8 +76,10 @@ docker compose exec app node scripts/create-admin.js admin@exemple.sn "MotDePass
 Placez ensuite un reverse proxy HTTPS (Caddy ou Nginx) devant le port 3000, puis ajoutez `COOKIE_SECURE=true`.
 
 ### Render
-Importez le dépôt GitHub, Render lit `render.yaml`. Le **disque persistant** est indispensable
+Importez le dépôt GitHub, Render lit `render.yaml`. L’application Express sert l’interface depuis `public/` et l’API depuis `/api`. Le **disque persistant** est indispensable
 pour conserver la base SQLite (offre payante). Sans disque, les données seraient perdues à chaque redéploiement.
+
+GitHub Actions exécute les tests API sur chaque push vers `main`. GitHub Pages ne convient pas à cette application, car il ne peut pas héberger le serveur Node.js ni sa base SQLite.
 
 ### Sauvegarde
 Copiez régulièrement le fichier `data/quantum.db` (arrêt non nécessaire grâce au mode WAL si vous utilisez

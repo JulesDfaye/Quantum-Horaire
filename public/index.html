@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5f0">
+  <title>Quantum Horaire | Suivi des enseignements</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/app.css">
+  <script src="/js/app.js" defer></script>
+</head>
+<body>
+  <div class="auth-screen" id="auth-screen">
+    <div class="auth-copy">
+      <div class="brand"><span class="brand-mark">Q</span><span>Quantum<br>Horaire</span></div>
+      <p class="eyebrow">ÉDUCATION · SÉNÉGAL</p>
+      <h1>Le temps<br>bien enseigné<br>compte.</h1>
+      <p class="auth-description">Le suivi mensuel des heures d’enseignement, simplement et avec précision.</p>
+      <div class="auth-foot">SDF Technologie <span>·</span> Plateforme de gestion scolaire</div>
+    </div>
+    <section class="auth-panel">
+      <div class="auth-card">
+        <p class="eyebrow" id="auth-eyebrow">VOTRE ESPACE DE TRAVAIL</p>
+        <h2 id="auth-title">Ravi de vous revoir.</h2>
+        <p class="muted" id="auth-subtitle">Connectez-vous pour retrouver vos fiches.</p>
+        <form id="auth-form">
+          <label class="register-only hidden" for="auth-name">Nom complet</label>
+          <input class="register-only hidden" id="auth-name" autocomplete="name" placeholder="Ex. Awa Fall">
+          <label for="auth-email">Adresse e-mail</label>
+          <input id="auth-email" type="email" autocomplete="email" required placeholder="nom@ecole.sn">
+          <label for="auth-password">Mot de passe</label>
+          <input id="auth-password" type="password" autocomplete="current-password" required minlength="10" placeholder="10 caractères minimum">
+          <p class="form-error" id="auth-error" role="alert"></p>
+          <button class="button button-primary button-wide" id="auth-submit" type="submit">Se connecter <span>↗</span></button>
+        </form>
+        <p class="auth-switch" id="auth-switch">Pas encore de compte ? <button type="button" id="toggle-auth">Créer un compte</button></p>
+      </div>
+    </section>
+  </div>
+
+  <div class="app-shell hidden" id="app-shell">
+    <aside class="sidebar">
+      <a class="brand sidebar-brand" href="#"><span class="brand-mark">Q</span><span>Quantum<br>Horaire</span></a>
+      <p class="nav-caption">ESPACE ÉCOLE</p>
+      <button class="nav-item active" data-view="dashboard"><span class="nav-icon">▦</span> Tableau de bord</button>
+      <button class="nav-item director-nav" data-view="profile"><span class="nav-icon">◉</span> Mon établissement</button>
+      <button class="nav-item hidden" id="admin-nav" data-view="admin"><span class="nav-icon">⌕</span> Inspection</button>
+      <div class="sidebar-bottom">
+        <div class="sidebar-rule"></div>
+        <div class="user-chip"><span class="avatar" id="user-avatar">Q</span><span class="user-label"><strong id="user-name">Directeur</strong><small id="user-role">Direction</small></span><button class="icon-button" id="logout" title="Se déconnecter" aria-label="Se déconnecter">↗</button></div>
+      </div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><div><span class="breadcrumb">Espace école</span><span class="breadcrumb-separator">/</span><strong id="page-label">Tableau de bord</strong></div><span class="today-label" id="today-label"></span></header>
+      <section class="view" id="dashboard-view">
+        <div class="page-heading"><div><p class="eyebrow">SUIVI PÉDAGOGIQUE</p><h1>Vos fiches horaires</h1><p class="muted">Une vision claire des enseignements, mois après mois.</p></div><button class="button button-primary" id="new-fiche"><span>＋</span> Nouvelle fiche</button></div>
+        <div class="summary-strip"><div><span class="summary-label">FICHES ENREGISTRÉES</span><strong id="fiche-count">0</strong></div><div><span class="summary-label">DERNIÈRE FICHE</span><strong class="summary-small" id="latest-fiche">Aucune pour le moment</strong></div><div class="summary-accent"><span>↗</span><span>Les heures réalisées sont calculées automatiquement.</span></div></div>
+        <div class="section-heading"><h2>Historique mensuel</h2><span id="history-count" class="muted"></span></div>
+        <div class="table-wrap"><table><thead><tr><th>PÉRIODE</th><th>ÉTABLISSEMENT</th><th>MISE À JOUR</th><th></th></tr></thead><tbody id="fiche-list"></tbody></table><div class="empty-state" id="empty-state"><span class="empty-mark">◷</span><strong>Votre suivi commence ici</strong><p>Créez une fiche mensuelle pour enregistrer les heures de votre équipe.</p><button class="button button-secondary" id="empty-new">Créer une fiche <span>↗</span></button></div></div>
+      </section>
+      <section class="view hidden" id="fiche-view">
+        <div class="page-heading fiche-heading"><div><button class="text-button" id="back-to-list">← Toutes les fiches</button><p class="eyebrow" id="fiche-eyebrow">FICHE MENSUELLE</p><h1 id="fiche-title">Septembre 2026</h1></div><div class="heading-actions"><button class="button button-secondary" id="print-fiche">Imprimer / PDF <span>↗</span></button><button class="button button-primary" id="save-fiche">Enregistrer <span>↗</span></button></div></div>
+        <div class="fiche-meta"><label>Établissement<input id="fiche-school" maxlength="160" placeholder="Nom de l’école"></label><label>Période<input id="fiche-month" type="month" disabled></label></div>
+        <div class="section-heading teacher-heading"><div><h2>Équipe enseignante</h2><p class="muted">Le réalisé est calculé automatiquement à l’enregistrement.</p></div><button class="button button-secondary" id="add-teacher">＋ Ajouter un enseignant</button></div>
+        <div class="table-wrap teacher-table-wrap"><table class="teacher-table"><thead><tr><th>ENSEIGNANT(E)</th><th>DUE (H)</th><th>MANQUÉES</th><th>COMPENSÉES</th><th>SUPP.</th><th>RÉALISÉES</th><th></th></tr></thead><tbody id="teacher-list"></tbody></table><div class="empty-state hidden" id="teacher-empty"><strong>Aucun enseignant ajouté</strong><p>Ajoutez un nom pour commencer le relevé.</p></div></div>
+        <div class="notes-field"><label for="fiche-notes">Observations</label><textarea id="fiche-notes" rows="3" maxlength="2000" placeholder="Note de fin de mois, événements ou remarques…"></textarea></div>
+        <div class="save-status" id="save-status" aria-live="polite"></div>
+      </section>
+      <section class="view hidden" id="admin-view">
+        <div class="page-heading"><div><p class="eyebrow">ESPACE INSPECTION</p><h1>Suivi des établissements</h1><p class="muted">Consultation des fiches mensuelles et des heures déclarées.</p></div><label class="admin-filter">Période<input id="admin-month" type="month"></label></div>
+        <div class="summary-strip"><div><span class="summary-label">ÉTABLISSEMENTS</span><strong id="admin-user-count">0</strong></div><div><span class="summary-label">FICHES POUR LA PÉRIODE</span><strong id="admin-fiche-count">0</strong></div><div class="summary-accent"><span>⌕</span><span>Les fiches sont consultables en lecture seule.</span></div></div>
+        <div class="section-heading"><h2>Fiches mensuelles</h2><button class="button button-secondary" id="admin-refresh">Actualiser</button></div>
+        <div class="table-wrap"><table><thead><tr><th>PÉRIODE</th><th>ÉTABLISSEMENT</th><th>DIRECTION</th><th>ENSEIGNANTS</th><th>HEURES RÉALISÉES</th><th></th></tr></thead><tbody id="admin-fiche-list"></tbody></table><div class="empty-state hidden" id="admin-empty"><span class="empty-mark">◷</span><strong>Aucune fiche pour cette période</strong><p>Modifiez le mois sélectionné pour consulter une autre période.</p></div></div>
+      </section>
+      <section class="view hidden" id="profile-view">
+        <div class="page-heading"><div><p class="eyebrow">INFORMATIONS DE L’ÉCOLE</p><h1>Mon établissement</h1><p class="muted">Ces informations préremplissent vos nouvelles fiches.</p></div></div>
+        <form class="profile-form" id="profile-form"><label>Nom du directeur<input id="profile-name" required maxlength="120"></label><label>Inspection d’académie (IA)<input id="profile-ia" maxlength="120"></label><label>Inspection de l’éducation et de la formation (IEF)<input id="profile-ief" maxlength="120"></label><label>CODEC<input id="profile-codec" maxlength="120"></label><label class="profile-wide">Établissement<input id="profile-school" maxlength="160"></label><div class="profile-wide form-actions"><span id="profile-status" class="muted"></span><button class="button button-primary" type="submit">Enregistrer le profil <span>↗</span></button></div></form>
+        <form class="profile-form password-form" id="password-form"><div class="profile-wide"><p class="eyebrow">SÉCURITÉ</p><h2>Changer de mot de passe</h2></div><label>Mot de passe actuel<input id="current-password" type="password" required autocomplete="current-password"></label><label>Nouveau mot de passe<input id="new-password" type="password" required minlength="10" autocomplete="new-password"></label><div class="profile-wide form-actions"><span id="password-status" class="muted"></span><button class="button button-secondary" type="submit">Mettre à jour</button></div></form>
+      </section>
+    </main>
+  </div>
+  <dialog id="new-fiche-dialog"><form method="dialog" id="new-fiche-form"><button class="icon-button dialog-close" value="cancel" aria-label="Fermer">×</button><p class="eyebrow">NOUVELLE PÉRIODE</p><h2>Créer une fiche</h2><p class="muted">Vous pouvez reprendre l’équipe et les heures dues du mois précédent.</p><label for="new-month">Mois concerné</label><input id="new-month" type="month" required><label class="check-label"><input id="copy-previous" type="checkbox" checked> Reprendre les enseignants du mois précédent</label><p class="form-error" id="new-error" role="alert"></p><button class="button button-primary button-wide" type="submit">Créer la fiche <span>↗</span></button></form></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

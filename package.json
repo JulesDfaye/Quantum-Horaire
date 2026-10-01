@@ -5,7 +5,7 @@
   "description": "Plateforme de gestion du quantum horaire des enseignants — écoles élémentaires du Sénégal",
   "main": "src/server.js",
   "license": "UNLICENSED",
-  "engines": { "node": ">=18" },
+  "engines": { "node": ">=22 <23" },
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
